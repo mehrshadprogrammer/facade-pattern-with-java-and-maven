@@ -1,15 +1,15 @@
 package org.example;
 
+import com.mysql.cj.log.Log;
 import org.example.entity.Product;
-import org.example.entity.User;
 import org.example.util.ApplicationContext;
 
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
         ApplicationContext.getInstance().getDatabaseUtil().getConnection();
         setUserForRegister();
         findByUsernameAndPassword();
@@ -22,16 +22,22 @@ public class Main {
         String name = ApplicationContext.getInstance().getIntSc().nextLine();
         int count = ApplicationContext.getInstance().getIntSc().nextInt();
         double price = ApplicationContext.getInstance().getIntSc().nextDouble();
-        ApplicationContext.getInstance().getProductRepository().insertProduct(new Product(name, price, count));
+
+        ApplicationContext.getInstance().getProductRepository().insertProduct(
+                ApplicationContext.getInstance()
+                        .getProductService().create(name, price, count)
+        );
     }
 
 
     private static void setUserForRegister() throws SQLException {
+        System.out.println("enter username");
         String username = ApplicationContext.getInstance().getIntSc().nextLine();
+        System.out.println("enter password");
         String password = ApplicationContext.getInstance().getIntSc().nextLine();
-        User user = new User(username, password);
         ApplicationContext.getInstance().getUserRepository().insertUser(
-                user
+                ApplicationContext.getInstance().getUserService()
+                        .createUser(username, password)
         );
     }
     private static List<Product> showAllProduct() throws SQLException {
@@ -45,7 +51,7 @@ public class Main {
         if (checkedExitOrNotExitWithUsernameAndPassword){
             System.out.println("exist");
         }else {
-            System.out.println("oh username and password is wrong");
+            System.out.println("oh username and password is wrong!!!");
         }
     }
 }

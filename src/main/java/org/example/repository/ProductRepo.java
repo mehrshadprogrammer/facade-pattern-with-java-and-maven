@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ProductRepo {
     private Connection connection;
-    private Product product;
 
     private final String TABLE_NAME = "my_test_database.product";
 
@@ -45,7 +44,7 @@ public class ProductRepo {
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new SQLException("No rows affected during product insertion!");
+                throw new SQLException("Exception oh!!!");
             }
         }
     }

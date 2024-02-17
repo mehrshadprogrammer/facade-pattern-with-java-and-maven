@@ -3,31 +3,29 @@ package org.example.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 public class DatabaseUtil {
     private Connection connection;
-    private String url;
-    private String username;
-    private String password;
+    private static final String URL = "jdbc:mysql://localhost:3306/my_test_database";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "123456";
 
 
-    public DatabaseUtil() throws ClassNotFoundException, SQLException {
+    public DatabaseUtil() throws SQLException {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        this.url = "jdbc:mysql://localhost:3306/my_test_database";
-        this.username = "root";
-        this.password = "123456";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL JDBC driver not found", e);
+        }
 
-        Properties properties = new Properties();
-        properties.put("user", username);
-        properties.put("password", password);
-        this.connection = DriverManager.getConnection(url, properties);
+
+        this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
     }
 
     public Connection getConnection() {
         return connection;
     }
-
 }

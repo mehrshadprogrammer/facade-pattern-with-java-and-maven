@@ -2,6 +2,8 @@
 
     import org.example.repository.ProductRepo;
     import org.example.repository.UserRepo;
+    import org.example.service.ProductService;
+    import org.example.service.UserService;
 
     import java.sql.SQLException;
     import java.util.Scanner;
@@ -14,6 +16,8 @@
         private Scanner intSc = new Scanner(System.in);
         private UserRepo userRepository;
         private ProductRepo productRepository;
+        private UserService userService;
+        private ProductService productService;
 
         private ApplicationContext() {
         }
@@ -46,11 +50,20 @@
         }
 
 
+        public UserService getUserService() {
+            if (userService == null)
+                userService = new UserService();
+            return userService;
+        }
+
+        public ProductService getProductService() {
+            if (productService == null)
+                productService = new ProductService();
+            return productService;
+        }
 
         public Scanner getIntSc() {
             return intSc;
         }
-
-
 
     }

@@ -1,0 +1,7 @@
+version: "3"
+services:
+  my-web-app-db:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=my_test_database
+      - MYSQL_USER=root
